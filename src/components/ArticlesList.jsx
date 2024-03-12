@@ -10,8 +10,9 @@ export default function ArticlesList() {
 
   useEffect(() => {
     getAllArticles()
-      .then((res) => {
-        const articles = res.data.articles;
+      .then(({ data }) => {
+        console.log(data);
+        const articles = data.articles;
         setArticles(articles);
         setIsLoading(false);
       })
