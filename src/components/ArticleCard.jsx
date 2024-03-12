@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 
-//will add link to article.id
+//import style card to section them
 
 export default function ArticleCard({ article }) {
   const parsedDate = Date.parse(article.created_at);
@@ -11,7 +11,7 @@ export default function ArticleCard({ article }) {
     addSuffix: true,
   });
   return (
-    <li>
+    <li className="article-card">
       <p>{article.topic}</p>
       <p>posted {formatTimeToNow}</p>
       <Link to={`/articles/${article.article_id}`}>
@@ -19,7 +19,7 @@ export default function ArticleCard({ article }) {
         <img
           src={article.article_img_url}
           alt={`${article.title}`}
-          style={{ maxWidth: "100%", height: "auto" }}
+          className="articleCard-image"
         />
       </Link>
       <div className="style-vote">

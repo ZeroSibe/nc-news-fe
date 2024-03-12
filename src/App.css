@@ -2,8 +2,10 @@
   letter-spacing: 1px;
   line-height: 1.5;
   display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: min-content auto auto;
+  place-items: center;
+  min-height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
   grid-template-areas:
     "header"
     "nav"
@@ -16,13 +18,44 @@ ul {
   padding: 0;
 }
 
+.article-section {
+  /* to import style, and centre*/
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  border: 1px solid #0f0d0d;
+  padding: 10px;
+}
+.article-card {
+  /* to import style, */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  border: 1px solid #070707;
+  padding: 10px;
+}
+.comment-card {
+  /* to import style, and centre*/
+  border: 1px solid #8d1313;
+  padding: 10px;
+}
+
+.articleCard-image,
+.article-image {
+  max-width: 100%;
+  height: auto;
+}
+
 @media only screen and (min-width: 600px) {
   .App {
-    grid-template-columns: 25% 75%;
+    display: grid;
+    grid-template-columns: auto 1fr;
     grid-template-rows: min-content auto;
     grid-template-areas:
       "header header"
       "nav content";
+    justify-items: center;
   }
   body {
     background-color: bisque;
