@@ -1,5 +1,4 @@
 import React from "react";
-import ArticleCard from "./ArticleCard";
 
 export default function ArticleStaticSection({ article }) {
   const parsedDate = Date.parse(article.created_at);
@@ -7,7 +6,7 @@ export default function ArticleStaticSection({ article }) {
     timeZone: "UTC",
   });
   return (
-    <section>
+    <section className="article-section">
       <p>
         Posted by {article.author} on {formattedDate}
       </p>
@@ -15,8 +14,9 @@ export default function ArticleStaticSection({ article }) {
       <img
         src={article.article_img_url}
         alt={`${article.title}`}
-        style={{ maxWidth: "100%", height: "auto" }}
+        className="article-image"
       />
+      <p>{article.body}</p>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticleByID } from "../api";
+import { getArticleByID, getCommentsByArticleID } from "../api";
 import Loading from "./Loading";
 import ArticleStaticSection from "./ArticleStaticSection";
 import ArticleVoteSection from "./ArticleVoteSection";
@@ -11,13 +11,19 @@ export default function SingleArticle() {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    getArticleByID(article_id)
-      .then(({ data }) => {
-        const article = data.article;
-        console.log(article);
+    const promises = [
+      getArticleByID(article_id),
+      getCommentsByArticleID(article_id),
+    ];
+    Promise.all(promises)
+      .then((returnPromises) => {
+        const article = returnPromises[0].data.article;
+        const comments = returnPromises[1].data.comments;
         setArticle(article);
+        setComments(comments);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -31,7 +37,7 @@ export default function SingleArticle() {
     <main>
       <ArticleStaticSection article={article} />
       <ArticleVoteSection votes={article.votes} />
-      <ArticleCommentSection />
+      <ArticleCommentSection comments={comments} />
     </main>
   );
 }
