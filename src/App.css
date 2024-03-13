@@ -17,6 +17,9 @@ ul {
   margin: 0;
   padding: 0;
 }
+.comments-container {
+  padding: 20px;
+}
 
 .article-section {
   /* to import style, and centre*/
@@ -45,6 +48,10 @@ ul {
 .article-image {
   max-width: 100%;
   height: auto;
+}
+.style-vote {
+  border: 1px solid #8d1313;
+  padding: 10px;
 }
 
 @media only screen and (min-width: 600px) {

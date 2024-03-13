@@ -20,5 +20,8 @@ export const getCommentsByArticleID = (article_id) => {
 };
 
 //PATCH /api/articles/:article_id <--update votes
+export const patchArticle = (article_id, patchBody) => {
+  return newsApi.patch(`/articles/${article_id}`, patchBody);
+};
 
 //POST /api/articles/:article_id/comments <-- update comments list

@@ -27,7 +27,14 @@ export default function ArticlesList() {
       <section>
         <ul>
           {articles.map((article) => {
-            return <ArticleCard key={article.article_id} article={article} />;
+            return (
+              <ArticleCard
+                key={article.article_id}
+                article={article}
+                setArticles={setArticles}
+                articles={articles}
+              />
+            );
           })}
         </ul>
       </section>
