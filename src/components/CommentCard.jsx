@@ -10,7 +10,7 @@ export default function CommentCard({ comment }) {
   return (
     <li className="comment-card">
       <p>
-        posted by {comment.author} {formatTimeToNow}
+        commented by {comment.author} {formatTimeToNow}
       </p>
       <p>{comment.body}</p>
       <button>+</button>

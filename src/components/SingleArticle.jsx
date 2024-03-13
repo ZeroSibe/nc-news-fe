@@ -12,6 +12,7 @@ export default function SingleArticle() {
   const [article, setArticle] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const promises = [
@@ -28,15 +29,27 @@ export default function SingleArticle() {
       })
       .catch((error) => {
         console.log(error);
+        setError("Page failed to load");
         setIsLoading(false);
       });
   }, [article_id]);
-  return isLoading ? (
-    <Loading />
-  ) : (
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
     <main>
       <ArticleStaticSection article={article} />
-      <ArticleVoteSection votes={article.votes} />
+      <ArticleVoteSection
+        votes={article.votes}
+        article={article}
+        setArticle={setArticle}
+      />
       <ArticleCommentSection comments={comments} />
     </main>
   );
