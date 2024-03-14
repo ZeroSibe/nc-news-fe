@@ -43,6 +43,10 @@ ul {
   border: 1px solid #8d1313;
   padding: 10px;
 }
+.topic-section {
+  border: 1px solid #8d1313;
+  padding: 10px;
+}
 
 .articleCard-image,
 .article-image {
@@ -69,6 +73,11 @@ ul {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.nav {
+  display: flex;
+  justify-content: space-evenly;
   align-items: center;
 }
 

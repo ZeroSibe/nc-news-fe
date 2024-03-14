@@ -4,8 +4,8 @@ const newsApi = axios.create({
   baseURL: "https://nc-news-izio.onrender.com/api",
 });
 
-export const getAllArticles = () => {
-  return newsApi.get("/articles");
+export const getAllArticles = (topic) => {
+  return newsApi.get("/articles", { params: { topic: topic } });
 };
 
 export const getArticleByID = (article_id) => {
@@ -36,4 +36,12 @@ export const postComment = (article_id, postBody) => {
 
 export const deleteCommentById = (comment_id) => {
   return newsApi.delete(`comments/${comment_id}`);
+};
+
+export const getTopics = () => {
+  return newsApi.get(`/topics`);
+};
+
+export const getArticlesByTopic = (topic) => {
+  return newsApi.get(`/topics/${topic}`);
 };
