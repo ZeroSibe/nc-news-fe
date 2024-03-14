@@ -20,16 +20,7 @@ export const patchArticle = (article_id, patchBody) => {
   return newsApi.patch(`/articles/${article_id}`, patchBody);
 };
 
-/* 201 body request, requires both
- const body = {
-      username: "butter_bridge",
-      body: "Testing",
-    };
-    */
-//POST /api/articles/:article_id/comments <-- update comments list
-// export const postCommentByArticleID = (article_id, postBody) => {
-//   return newsApi.post(`/articles/${article_id}/comments`, postBody);
-// };
+//has to be existing dev user
 export const postComment = (article_id, postBody) => {
   return fetch(
     `https://nc-news-izio.onrender.com/api/articles/${article_id}/comments`,
@@ -41,4 +32,8 @@ export const postComment = (article_id, postBody) => {
   ).then((res) => {
     return res.json();
   });
+};
+
+export const deleteCommentById = (comment_id) => {
+  return newsApi.delete(`comments/${comment_id}`);
 };
