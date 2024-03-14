@@ -4,10 +4,18 @@ import ArticlesList from "./components/ArticlesList";
 import Header from "./components/Header";
 import SingleArticle from "./components/SingleArticle";
 import Nav from "./components/Nav";
+import { useState } from "react";
+import { UserContext } from "./contexts/User";
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({
+    username: "tickle122",
+    name: "Tom Tickle",
+    avatar_url:
+      "https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/87.svg",
+  });
   return (
-    <div>
+    <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
       <Header />
       <Nav />
       <main className="content">
@@ -17,7 +25,7 @@ function App() {
           <Route path="/articles/:article_id" element={<SingleArticle />} />
         </Routes>
       </main>
-    </div>
+    </UserContext.Provider>
   );
 }
 

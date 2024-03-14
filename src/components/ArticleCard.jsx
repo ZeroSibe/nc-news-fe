@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatDistanceToNow } from "date-fns";
 import { patchArticle } from "../api";
 
 //import style card to section them
@@ -8,9 +7,8 @@ import { patchArticle } from "../api";
 
 export default function ArticleCard({ article, articles, setArticles }) {
   const parsedDate = Date.parse(article.created_at);
-  const formatTimeToNow = formatDistanceToNow(new Date(parsedDate), {
-    includeSeconds: true,
-    addSuffix: true,
+  const formattedDate = new Date(parsedDate).toLocaleString("en-GB", {
+    timeZone: "UTC",
   });
   const handleVote = (article_id, voteType) => {
     setArticles((currArticles) => {
@@ -41,7 +39,7 @@ export default function ArticleCard({ article, articles, setArticles }) {
   return (
     <li className="article-card">
       <p>{article.topic}</p>
-      <p>posted {formatTimeToNow}</p>
+      <p>posted {formattedDate}</p>
       <Link to={`/articles/${article.article_id}`}>
         <h2>{article.title}</h2>
         <img
