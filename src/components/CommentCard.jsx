@@ -1,16 +1,14 @@
 import React from "react";
-import { formatDistanceToNow } from "date-fns";
 
 export default function CommentCard({ comment }) {
   const parsedDate = Date.parse(comment.created_at);
-  const formatTimeToNow = formatDistanceToNow(new Date(parsedDate), {
-    includeSeconds: true,
-    addSuffix: true,
+  const formattedDate = new Date(parsedDate).toLocaleString("en-GB", {
+    timeZone: "UTC",
   });
   return (
     <li className="comment-card">
       <p>
-        commented by {comment.author} {formatTimeToNow}
+        commented by {comment.author} {formattedDate}
       </p>
       <p>{comment.body}</p>
       <button>+</button>

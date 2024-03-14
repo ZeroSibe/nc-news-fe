@@ -1,0 +1,81 @@
+import React, { useContext, useEffect } from "react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../contexts/User";
+import { postComment } from "../api";
+
+export default function CommentAdder({ setComments }) {
+  const [error, setError] = useState(null);
+  const [keyProp, setKeyProp] = useState("");
+  const [newComment, setNewComment] = useState({});
+  const [newCommentText, setNewCommentText] = useState("");
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const { article_id } = useParams();
+
+  const validateUser = () => {
+    if (!loggedInUser.username) {
+      setError("Please login to post a comment");
+    }
+  };
+
+  useEffect(() => {
+    if (newComment.author) {
+      const key = Date.now().toString();
+      setKeyProp(key);
+      setComments((currComments) => {
+        console.log(newComment);
+        return [{ ...newComment, comment_id: keyProp }, ...currComments];
+      });
+      postComment(article_id, {
+        username: newComment.author,
+        body: newComment.body,
+      })
+        .then((response) => {
+          console.log(response);
+          alert("successfully posted");
+        })
+        .catch((error) => {
+          alert("Comment Failed to post");
+          console.log(error);
+        });
+    }
+  }, [newComment]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    validateUser();
+    if (!error) {
+      const newComment = {
+        author: loggedInUser.username,
+        body: newCommentText,
+        votes: 0,
+        created_at: new Date().toString(),
+        article_id: Number(article_id),
+      };
+      setNewComment(newComment);
+      setNewCommentText("");
+    }
+  };
+
+  return (
+    <form className="Comment-form" onSubmit={handleSubmit}>
+      <label htmlFor="new-comment"></label>
+      <textarea
+        id="new-comment"
+        type="text"
+        multiline="true"
+        placeholder="Add a comment"
+        required={true}
+        value={newCommentText}
+        onChange={(e) => {
+          setNewCommentText(e.target.value);
+        }}
+      ></textarea>
+
+      <label htmlFor="submit-comment-button"></label>
+      <button id="submit-comment-button" type="submit">
+        Post Comment
+      </button>
+    </form>
+  );
+}

@@ -53,6 +53,24 @@ ul {
   border: 1px solid #8d1313;
   padding: 10px;
 }
+.loggedIn-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.loggedIn-container {
+  display: grid;
+}
+.loggedIn-username {
+  margin-top: 0px;
+  margin-left: 10px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 @media only screen and (min-width: 600px) {
   .App {

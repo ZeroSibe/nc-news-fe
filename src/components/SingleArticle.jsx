@@ -10,47 +10,63 @@ import ArticleCommentSection from "./ArticleCommentSection";
 export default function SingleArticle() {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
-  const [error, setError] = useState(null);
+  const [isLoadingArticle, setIsLoadingArticle] = useState(true);
+  const [isLoadingComments, setIsLoadingComments] = useState(true);
+  const [errorArticle, setErrorArticle] = useState(null);
+  const [errorComments, setErrorComments] = useState(null);
 
   useEffect(() => {
-    const promises = [
-      getArticleByID(article_id),
-      getCommentsByArticleID(article_id),
-    ];
-    Promise.all(promises)
-      .then((returnPromises) => {
-        const article = returnPromises[0].data.article;
-        const comments = returnPromises[1].data.comments;
+    getArticleByID(article_id)
+      .then(({ data }) => {
+        const article = data.article;
         setArticle(article);
-        setComments(comments);
-        setIsLoading(false);
+        setIsLoadingArticle(false);
       })
       .catch((error) => {
         console.log(error);
-        setError("Page failed to load");
-        setIsLoading(false);
+        setErrorArticle("Page Failed to load");
+        setIsLoadingArticle(false);
+      });
+
+    getCommentsByArticleID(article_id)
+      .then(({ data }) => {
+        const comments = data.comments;
+        setComments(comments);
+        setIsLoadingComments(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorComments("Comments failed to load");
+        setIsLoadingComments(false);
       });
   }, [article_id]);
 
-  if (isLoading) {
+  if (errorArticle) {
+    return <div>Error: {errorArticle}</div>;
+  }
+
+  if (isLoadingArticle) {
     return <Loading />;
+  } else {
+    return (
+      <main>
+        <ArticleStaticSection article={article} />
+        <ArticleVoteSection
+          votes={article.votes}
+          article={article}
+          setArticle={setArticle}
+        />
+        {errorComments ? (
+          <div>Error: {errorComments}</div>
+        ) : (
+          <ArticleCommentSection
+            isLoadingComments={isLoadingComments}
+            comments={comments}
+            setComments={setComments}
+          />
+        )}
+      </main>
+    );
   }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  return (
-    <main>
-      <ArticleStaticSection article={article} />
-      <ArticleVoteSection
-        votes={article.votes}
-        article={article}
-        setArticle={setArticle}
-      />
-      <ArticleCommentSection comments={comments} />
-    </main>
-  );
 }
