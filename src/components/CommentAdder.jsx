@@ -23,7 +23,6 @@ export default function CommentAdder({ setComments }) {
       const key = Date.now().toString();
       setKeyProp(key);
       setComments((currComments) => {
-        console.log(newComment);
         return [{ ...newComment, comment_id: keyProp }, ...currComments];
       });
       postComment(article_id, {
@@ -31,7 +30,6 @@ export default function CommentAdder({ setComments }) {
         body: newComment.body,
       })
         .then((response) => {
-          console.log(response);
           alert("successfully posted");
         })
         .catch((error) => {

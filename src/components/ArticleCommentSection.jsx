@@ -16,7 +16,13 @@ export default function ArticleCommentSection({
       <CommentAdder setComments={setComments} />
       <ul>
         {comments.map((comment) => {
-          return <CommentCard key={comment.comment_id} comment={comment} />;
+          return (
+            <CommentCard
+              key={comment.comment_id}
+              comment={comment}
+              setComments={setComments}
+            />
+          );
         })}
       </ul>
     </section>
