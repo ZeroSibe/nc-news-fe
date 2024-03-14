@@ -6,6 +6,8 @@ import SingleArticle from "./components/SingleArticle";
 import Nav from "./components/Nav";
 import { useState } from "react";
 import { UserContext } from "./contexts/User";
+import TopicsPage from "./components/TopicsPage";
+import SingleTopic from "./components/SingleTopic";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({
@@ -23,6 +25,8 @@ function App() {
           <Route path="/" element={<ArticlesList />} />
           <Route path="/articles" element={<ArticlesList />} />
           <Route path="/articles/:article_id" element={<SingleArticle />} />
+          <Route path="/topics" element={<TopicsPage />} />
+          <Route path="/topics/:topic" element={<SingleTopic />} />
         </Routes>
       </main>
     </UserContext.Provider>

@@ -3,13 +3,15 @@ import React from "react";
 import { getAllArticles } from "../api";
 import ArticleCard from "./ArticleCard";
 import Loading from "./Loading";
+import TopicsCategory from "./TopicsCategory";
 
 export default function ArticlesList() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [topics, setTopics] = useState("");
 
   useEffect(() => {
-    getAllArticles()
+    getAllArticles(topics)
       .then(({ data }) => {
         const articles = data.articles;
         setArticles(articles);
@@ -18,12 +20,13 @@ export default function ArticlesList() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [topics]);
 
   return isLoading ? (
     <Loading />
   ) : (
     <div>
+      <TopicsCategory topics={topics} setTopics={setTopics} />
       <section>
         <ul>
           {articles.map((article) => {
