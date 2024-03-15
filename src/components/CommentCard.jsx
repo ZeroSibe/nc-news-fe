@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../contexts/User";
 import { deleteCommentById } from "../api";
 
@@ -10,60 +10,55 @@ export default function CommentCard({ comment, setComments }) {
   });
 
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
-  const [deleteBtn, setDeleteBtn] = useState(false);
-  const [deleteComment, setDeleteComment] = useState({});
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    loggedInUser.username === comment.author
-      ? setDeleteBtn(true)
-      : setDeleteBtn(false);
-  }, [loggedInUser]);
-
-  useEffect(() => {
-    if (deleteComment.comment_id) {
-      setTimeout(
-        () =>
-          setComments((currCommets) => {
-            return [...currCommets];
-          }),
-        100
-      );
-      //has to be existing post delete
-      console.log(deleteComment.comment_id);
-      deleteCommentById(deleteComment.comment_id)
-        .then((res) => {
-          //204 only after a
-          console.log(res);
-          alert("deleted successfully");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [deleteComment]);
-
-  const handleDelete = (e) => {
+  function handleDelete(e) {
+    //own function make delete request
     e.preventDefault();
-    setDeleteComment(comment);
-    console.log(comment);
-    setDeleteBtn(false);
-    console.log("send message to user to wait");
-  };
+    setIsLoading(true);
+    const commentId = e.target.value;
+    deleteCommentById(commentId)
+      .then(() => {
+        setIsDeleteClicked(true);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        const errMsg = "Failed to delete comment please refresh to try again";
+        setError(errMsg);
+        setIsLoading(false);
+      });
+  }
 
   return (
     <li className="comment-card">
-      <p>
-        commented by {comment.author} {formattedDate}
-      </p>
-      <p>{comment.body}</p>
-      <button>+</button>
-      {comment.votes}
-      <button>-</button>
-
-      {deleteBtn && (
-        <button value={deleteBtn} onClick={handleDelete} className="delete-btn">
-          Delete Comment
-        </button>
+      {isLoading && <p>deleting comment...</p>}
+      {error && <p className="red-text">Error: {error}</p>}
+      {isDeleteClicked ? (
+        <p className="green-text">
+          Your comment has been successfully deleted...{" "}
+        </p>
+      ) : (
+        <>
+          <p>
+            commented by {comment.author} {formattedDate}
+          </p>
+          <p>{comment.body}</p>
+          <button>+</button>
+          {comment.votes}
+          <button>-</button>
+          {loggedInUser.username === comment.author && (
+            <button
+              value={comment.comment_id}
+              onClick={handleDelete}
+              className="delete-button"
+            >
+              Delete
+            </button>
+          )}
+        </>
       )}
     </li>
   );

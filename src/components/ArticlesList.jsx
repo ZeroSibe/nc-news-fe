@@ -36,6 +36,7 @@ export default function ArticlesList() {
   ) : (
     <div>
       <div className="sort-container">
+
         <TopicsCategory topics={topics} setTopics={setTopics} />
 
         <div className="sort-articles">
