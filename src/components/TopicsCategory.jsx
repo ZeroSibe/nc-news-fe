@@ -18,10 +18,10 @@ export default function TopicsCategory({ topics, setTopics }) {
   };
 
   return (
-    <>
-      <label id="topic-options"></label>
+    <div className="sort-topic">
+      <label id="topic-options">Topics:</label>
       <select id="topic-options" onChange={handleTopicSelection}>
-        <option value={resetTopic}>Filter Topic</option>
+        <option value={resetTopic}>All</option>
 
         {topicTypes.map((topicType) => {
           return (
@@ -31,6 +31,6 @@ export default function TopicsCategory({ topics, setTopics }) {
           );
         })}
       </select>
-    </>
+    </div>
   );
 }
