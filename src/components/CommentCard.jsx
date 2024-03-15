@@ -61,8 +61,8 @@ export default function CommentCard({ comment, setComments }) {
       <button>-</button>
 
       {deleteBtn && (
-        <button value={deleteBtn} onClick={handleDelete}>
-          X
+        <button value={deleteBtn} onClick={handleDelete} className="delete-btn">
+          Delete Comment
         </button>
       )}
     </li>

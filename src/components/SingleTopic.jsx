@@ -15,7 +15,6 @@ export default function SingleTopic() {
     getArticlesByTopic(topic)
       .then(({ data }) => {
         const articles = data.articles;
-        console.log(articles);
         setArticles(articles);
         setIsLoading(false);
       })

@@ -67,7 +67,9 @@ export default function ArticleCard({ article, articles, setArticles }) {
           ⬇︎
         </button>
       </div>
-      <button>comment: {article.comment_count}</button>
+      <Link to={`/articles/${article.article_id}`}>
+        <button>comment: {article.comment_count}</button>
+      </Link>
     </li>
   );
 }

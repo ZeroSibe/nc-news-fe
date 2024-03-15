@@ -7,29 +7,30 @@ export default function TopicsCategory({ topics, setTopics }) {
   useEffect(() => {
     getTopics().then(({ data }) => {
       const topicsFromAPI = data.topics.map((topic) => topic.slug);
-      console.log(topicsFromAPI);
       setTopicTypes(topicsFromAPI);
     });
   }, []);
 
   const handleTopicSelection = (e) => {
     //set State from article list
-    console.log(e.target.value);
     const selectedTopic = e.target.value;
     setTopics(selectedTopic);
   };
 
   return (
-    <select id="topic-options" onChange={handleTopicSelection}>
-      <option value={resetTopic}>Filter Topic</option>
+    <>
+      <label id="topic-options"></label>
+      <select id="topic-options" onChange={handleTopicSelection}>
+        <option value={resetTopic}>Filter Topic</option>
 
-      {topicTypes.map((topicType) => {
-        return (
-          <option key={topicType} value={topicType}>
-            {topicType}
-          </option>
-        );
-      })}
-    </select>
+        {topicTypes.map((topicType) => {
+          return (
+            <option key={topicType} value={topicType}>
+              {topicType}
+            </option>
+          );
+        })}
+      </select>
+    </>
   );
 }
