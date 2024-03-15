@@ -61,8 +61,8 @@ export default function CommentAdder({ setComments }) {
 
   return (
     <form className="Comment-form" onSubmit={handleSubmit}>
-      <label htmlFor="new-comment"></label>
       <textarea
+        aria-label="post a comment here"
         id="new-comment"
         type="text"
         multiline="true"
@@ -74,8 +74,11 @@ export default function CommentAdder({ setComments }) {
         }}
       ></textarea>
 
-      <label htmlFor="submit-comment-button"></label>
-      <button id="submit-comment-button" type="submit">
+      <button
+        id="submit-comment-button"
+        type="submit"
+        aria-label="submit comment"
+      >
         Post Comment
       </button>
       {error && <p className="red-text">Error: {error}</p>}

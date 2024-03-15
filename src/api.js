@@ -47,3 +47,7 @@ export const getTopics = () => {
 export const getArticlesByTopic = (topic) => {
   return newsApi.get(`/topics/${topic}`);
 };
+
+export const getAllUsers = () => {
+  return newsApi.get("/users");
+};

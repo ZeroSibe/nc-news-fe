@@ -7,6 +7,7 @@ export default function ArticleCard({ article, artices, setArticles }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const parsedDate = Date.parse(article.created_at);
+
   const formattedDate = formatDistanceToNow(new Date(parsedDate), {
     addSuffix: true,
   });
@@ -54,8 +55,13 @@ export default function ArticleCard({ article, artices, setArticles }) {
   };
   return (
     <li className="article-card">
-      <p>{article.topic}</p>
-      <p>posted {formattedDate}</p>
+      <li className="mini-article-card-header">
+        <Link to={`/topics/${article.topic}`}>
+          <p>r/{article.topic}</p>
+        </Link>
+        <p className="posted-date"> posted {formattedDate}</p>
+      </li>
+
       <Link to={`/articles/${article.article_id}`}>
         <h2>{article.title}</h2>
         <img
