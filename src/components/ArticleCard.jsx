@@ -55,12 +55,12 @@ export default function ArticleCard({ article, artices, setArticles }) {
   };
   return (
     <li className="article-card">
-      <li className="mini-article-card-header">
+      <div className="mini-article-card-header">
         <Link to={`/topics/${article.topic}`}>
           <p>r/{article.topic}</p>
         </Link>
         <p className="posted-date"> posted {formattedDate}</p>
-      </li>
+      </div>
 
       <Link to={`/articles/${article.article_id}`}>
         <h2>{article.title}</h2>
