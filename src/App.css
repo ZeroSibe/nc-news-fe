@@ -1,4 +1,5 @@
 .App {
+  font-family: "Courier New", Courier, monospace;
   letter-spacing: 1px;
   line-height: 1.5;
   display: grid;
@@ -17,26 +18,53 @@
 .green-text {
   color: green;
 }
+.mini-article-card-header {
+  display: flex;
+  flex-direction: row;
+  color: #404040;
+}
+.posted-date {
+  margin-left: 10px;
+}
 
 li.article-card,
 .topic-section {
+  display: flex;
+  flex-direction: column;
   margin: 40px;
+  box-shadow: 10px -19px 9px rgb(0 0 0 / 30%);
+  background-color: #f0f6c2;
+  border: 7px solid #dea61c;
+  border-radius: 10px;
+  padding: 10px;
 }
-.topic-section {
+.topic-section,
+.users-container {
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+li.user-card {
+  display: flex;
+  flex-direction: column;
+  background-color: yellow;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px;
 }
 
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 .comments-container {
   padding: 20px;
 }
 
 .article-section {
-  /* to import style, and centre*/
   margin: 0;
   padding: 0;
   text-align: center;
@@ -44,7 +72,6 @@ ul {
   padding: 10px;
 }
 .article-card {
-  /* to import style, */
   margin: 0;
   padding: 0;
   text-align: center;
@@ -74,6 +101,13 @@ ul {
   border-radius: 50%;
   border: 1px solid black;
 }
+
+.avatar-img {
+  width: 171px;
+  height: 175px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
 .loggedIn-container {
   display: grid;
   margin-top: 10px;
@@ -87,6 +121,7 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0;
 }
 .nav,
 .header {
@@ -107,6 +142,9 @@ ul {
 }
 .Header-tiltle {
   margin-left: 20px;
+  text-decoration: none;
+  color: inherit;
+  color: #000000;
 }
 
 .comment-card {
@@ -119,6 +157,17 @@ ul {
   right: 5px;
   background-color: #e69c9c;
   border-radius: 5px;
+}
+.logout-button,
+.login-button {
+  bottom: 5px;
+  border-radius: 5px;
+}
+.login-button {
+  background-color: mediumaquamarine;
+}
+.logout-button {
+  background-color: salmon;
 }
 
 @media only screen and (min-width: 600px) {
