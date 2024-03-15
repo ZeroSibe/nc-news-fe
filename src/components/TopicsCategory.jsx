@@ -4,18 +4,26 @@ import React, { useEffect, useState } from "react";
 export default function TopicsCategory({ topics, setTopics }) {
   const [topicTypes, setTopicTypes] = useState([]);
   const [resetTopic, setResetTopic] = useState("");
+  const [error, setError] = useState(null);
   useEffect(() => {
-    getTopics().then(({ data }) => {
-      const topicsFromAPI = data.topics.map((topic) => topic.slug);
-      setTopicTypes(topicsFromAPI);
-    });
+    getTopics()
+      .then(({ data }) => {
+        const topicsFromAPI = data.topics.map((topic) => topic.slug);
+        setTopicTypes(topicsFromAPI);
+      })
+      .catch((error) => {
+        setError("Something went wrong");
+      });
   }, []);
 
   const handleTopicSelection = (e) => {
-    //set State from article list
     const selectedTopic = e.target.value;
     setTopics(selectedTopic);
   };
+
+  if (error) {
+    return <p className="red-text">Error: {error}</p>;
+  }
 
   return (
     <div className="sort-topic">

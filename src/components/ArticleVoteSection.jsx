@@ -1,7 +1,10 @@
 import React from "react";
 import { patchArticle } from "../api";
+import { useState } from "react";
 
 export default function ArticleVoteSection({ votes, article, setArticle }) {
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const handleVote = (article_id, voteType) => {
     setArticle((currArticle) => {
       if (currArticle.article_id === article_id) {
@@ -16,15 +19,29 @@ export default function ArticleVoteSection({ votes, article, setArticle }) {
       return currArticle;
     });
     if (voteType === "upVote") {
-      patchArticle(article_id, { inc_votes: +1 }).catch((error) => {
-        console.log(error.response.data);
-        alert("Failed to upvote. Please try again later");
-      });
+      patchArticle(article_id, { inc_votes: +1 })
+        .then(() => {
+          setSuccess("Vote successful!");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 1000);
+        })
+        .catch((error) => {
+          const errMsg = "Failed to vote";
+          setError(errMsg);
+        });
     } else {
-      patchArticle(article_id, { inc_votes: -1 }).catch((error) => {
-        console.log(error);
-        alert("Failed to downvote. Please try again later");
-      });
+      patchArticle(article_id, { inc_votes: -1 })
+        .then(() => {
+          setSuccess("Vote successful!");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 1000);
+        })
+        .catch((error) => {
+          const errMsg = "Failed to vote";
+          setError(errMsg);
+        });
     }
   };
   return (
@@ -46,6 +63,8 @@ export default function ArticleVoteSection({ votes, article, setArticle }) {
       >
         ⬇︎
       </button>
+      {error && <p className="red-text">Error: {error}</p>}
+      {success && <p className="green-text">{success}</p>}
     </div>
   );
 }

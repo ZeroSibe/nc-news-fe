@@ -23,9 +23,9 @@ export default function SingleArticle() {
         setArticle(article);
         setIsLoadingArticle(false);
       })
-      .catch((error) => {
-        console.log(error);
-        setErrorArticle("Page Failed to load");
+      .catch(({ response }) => {
+        const errMsg = response.data.msg;
+        setErrorArticle(errMsg);
         setIsLoadingArticle(false);
       });
 
@@ -35,15 +35,14 @@ export default function SingleArticle() {
         setComments(comments);
         setIsLoadingComments(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(({ response }) => {
         setErrorComments("Comments failed to load");
         setIsLoadingComments(false);
       });
   }, [article_id]);
 
   if (errorArticle) {
-    return <div>Error: {errorArticle}</div>;
+    return <div className="red-text">Error: {errorArticle}</div>;
   }
 
   if (isLoadingArticle) {
@@ -58,7 +57,7 @@ export default function SingleArticle() {
           setArticle={setArticle}
         />
         {errorComments ? (
-          <div>Error: {errorComments}</div>
+          <div className="red-text">Error: {errorComments}</div>
         ) : (
           <ArticleCommentSection
             isLoadingComments={isLoadingComments}
