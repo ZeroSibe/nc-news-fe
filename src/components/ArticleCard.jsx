@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { patchArticle } from "../api";
+import { formatDistanceToNow } from "date-fns";
 
-//import style card to section them
-//minus vote button to be added
-
-export default function ArticleCard({ article, articles, setArticles }) {
+export default function ArticleCard({ article, artices, setArticles }) {
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const parsedDate = Date.parse(article.created_at);
-  const formattedDate = new Date(parsedDate).toLocaleString("en-GB", {
-    timeZone: "UTC",
+  const formattedDate = formatDistanceToNow(new Date(parsedDate), {
+    addSuffix: true,
   });
+
   const handleVote = (article_id, voteType) => {
     setArticles((currArticles) => {
       const updatedArticles = currArticles.map((article) => {
@@ -24,16 +25,31 @@ export default function ArticleCard({ article, articles, setArticles }) {
       });
       return updatedArticles;
     });
+
     if (voteType === "upVote") {
-      patchArticle(article_id, { inc_votes: +1 }).catch((error) => {
-        console.log(error.response.data);
-        alert("Failed to upvote. Please try again later");
-      });
+      patchArticle(article_id, { inc_votes: +1 })
+        .then(() => {
+          setSuccess("Vote successful!");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 1000);
+        })
+        .catch((error) => {
+          const errMsg = "Failed to vote";
+          setError(errMsg);
+        });
     } else {
-      patchArticle(article_id, { inc_votes: -1 }).catch((error) => {
-        console.log(error);
-        alert("Failed to downvote. Please try again later");
-      });
+      patchArticle(article_id, { inc_votes: -1 })
+        .then(() => {
+          setSuccess("Vote successful!");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 1000);
+        })
+        .catch((error) => {
+          const errMsg = "Failed to vote";
+          setError(errMsg);
+        });
     }
   };
   return (
@@ -66,6 +82,8 @@ export default function ArticleCard({ article, articles, setArticles }) {
         >
           ⬇︎
         </button>
+        {error && <p className="red-text">Error: {error}</p>}
+        {success && <p className="green-text">{success}</p>}
       </div>
       <Link to={`/articles/${article.article_id}`}>
         <button>comment: {article.comment_count}</button>

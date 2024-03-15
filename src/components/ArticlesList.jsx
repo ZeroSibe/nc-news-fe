@@ -7,6 +7,7 @@ import TopicsCategory from "./TopicsCategory";
 import { useSearchParams } from "react-router-dom";
 
 export default function ArticlesList() {
+  const [error, setError] = useState(null);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [topics, setTopics] = useState("");
@@ -23,7 +24,8 @@ export default function ArticlesList() {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        setError("Articles failed to Load");
+        setIsLoading(false);
       });
   }, [topics, sortBy, order]);
 
@@ -35,8 +37,8 @@ export default function ArticlesList() {
     <Loading />
   ) : (
     <div>
+      {error && <p className="red-text">Error: {error}</p>}
       <div className="sort-container">
-
         <TopicsCategory topics={topics} setTopics={setTopics} />
 
         <div className="sort-articles">

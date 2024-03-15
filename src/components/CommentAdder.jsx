@@ -6,10 +6,11 @@ import { postComment } from "../api";
 
 export default function CommentAdder({ setComments }) {
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const [keyProp, setKeyProp] = useState("");
   const [newComment, setNewComment] = useState({});
   const [newCommentText, setNewCommentText] = useState("");
-  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
   const { article_id } = useParams();
 
   const validateUser = () => {
@@ -25,16 +26,19 @@ export default function CommentAdder({ setComments }) {
       setComments((currComments) => {
         return [{ ...newComment, comment_id: keyProp }, ...currComments];
       });
+
       postComment(article_id, {
         username: newComment.author,
         body: newComment.body,
       })
-        .then((response) => {
-          alert("successfully posted");
+        .then(() => {
+          setSuccess("successfully posted!");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 1000);
         })
         .catch((error) => {
-          alert("Comment Failed to post");
-          console.log(error);
+          setError("Comment failed to post");
         });
     }
   }, [newComment]);
@@ -74,6 +78,8 @@ export default function CommentAdder({ setComments }) {
       <button id="submit-comment-button" type="submit">
         Post Comment
       </button>
+      {error && <p className="red-text">Error: {error}</p>}
+      {success && <p className="green-text">{success}</p>}
     </form>
   );
 }
