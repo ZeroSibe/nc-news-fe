@@ -51,3 +51,7 @@ export const getArticlesByTopic = (topic) => {
 export const getAllUsers = () => {
   return newsApi.get("/users");
 };
+
+export const getArticlesByAuthor = () => {
+  return newsApi.get(`/articles?sort_by=votes`);
+};

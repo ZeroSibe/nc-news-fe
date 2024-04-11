@@ -10,8 +10,10 @@ import TopicsPage from "./components/TopicsPage";
 import SingleTopic from "./components/SingleTopic";
 import ErrorPage from "./components/ErrorPage";
 import SwitchUser from "./components/SwitchUser";
+import HomePage from "./components/HomePage";
 
 function App() {
+  
   const [loggedInUser, setLoggedInUser] = useState({
     username: "tickle122",
     name: "Tom Tickle",
@@ -24,7 +26,7 @@ function App() {
       <Nav />
       <main className="content">
         <Routes>
-          <Route path="/" element={<ArticlesList />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/articles" element={<ArticlesList />} />
           <Route path="/articles/:article_id" element={<SingleArticle />} />
           <Route path="/topics" element={<TopicsPage />} />

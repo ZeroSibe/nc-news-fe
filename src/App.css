@@ -146,6 +146,9 @@ ul {
   color: inherit;
   color: #000000;
 }
+.page-titles {
+  text-align: center;
+}
 
 .comment-card {
   position: relative;
