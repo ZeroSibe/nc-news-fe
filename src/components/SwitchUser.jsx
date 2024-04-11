@@ -24,7 +24,7 @@ export default function SwitchUser() {
 
   return (
     <main>
-      <h2>Select a User</h2>
+      <h2 className="page-titles">Select a User</h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
